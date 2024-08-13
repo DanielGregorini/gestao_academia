@@ -8,6 +8,8 @@ function LoginPage() {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
+
+    //implementar o login
     console.log('Username:', username);
     console.log('Password:', password);
   };
