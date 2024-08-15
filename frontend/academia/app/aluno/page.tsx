@@ -1,4 +1,5 @@
 function AlunoPage() {
+  
   return (
     <main>
       <div>aluno page</div>

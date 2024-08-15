@@ -2,7 +2,7 @@
 function ProfessorPage() {
   
   return (
-    <main>
+    <main className="min-h-96">
       <div>Professor page</div>
     </main>
   );

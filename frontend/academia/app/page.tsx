@@ -4,9 +4,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main>
-        home page
-      </main>
+      <main style={{ minHeight: "50rem" }}>home page</main>
     </>
   );
 }
