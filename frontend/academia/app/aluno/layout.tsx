@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import NavbarAluno from "@/components/layout/NavbarAluno";
+import NavbarAluno from "@/components/layout/navbarAluno";
 
 interface AlunoLayoutProps {
   children: ReactNode;

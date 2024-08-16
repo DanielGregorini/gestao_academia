@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import NavbarProfessor from "@/components/layout/NavbarProfessor";
+import NavbarProfessor from "@/components/layout/navbarProfessor";
 
 interface ProfessorLayoutProps {
   children: ReactNode;

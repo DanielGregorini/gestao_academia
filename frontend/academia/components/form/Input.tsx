@@ -3,12 +3,13 @@ import React, { ChangeEvent, FC } from "react";
 
 interface InputProps {
   id: string;
-  value: string;
+  value: string | number | null | undefined;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   className?: string;
   placeholder?: string;
   type?: string;
+  minLength?: number; // Adicionando a prop minLength
 }
 
 const Input: FC<InputProps> = ({
@@ -19,16 +20,18 @@ const Input: FC<InputProps> = ({
   className = "",
   placeholder = "",
   type = "text",
+  minLength
 }) => {
   return (
     <input
       type={type}
       id={id}
-      value={value}
+      value={value ?? ''}
       onChange={onChange}
       required={required}
       className={`${className}`}
       placeholder={placeholder}
+      minLength={minLength}
     />
   );
 };

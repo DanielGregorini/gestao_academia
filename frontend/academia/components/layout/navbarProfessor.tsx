@@ -2,15 +2,18 @@ import React from "react";
 import Link from "next/link";
 
 function NavbarProfessor() {
-  
   return (
     <nav className="flex justify-between items-center p-4 bg-gray-800">
       <div className="text-white text-xl font-bold w-1/3">Logo</div>
 
       <div className="flex justify-around items-center w-1/3">
         <div className="text-white text-xl font-bold">
-          <Link href="/professor/atualizaraluno">Atualizar Aluno</Link>
+          <Link href="/professor/editartreino">Editar treinos</Link>
         </div>
+
+        {/*<div className="text-white text-xl font-bold">
+          <Link href="/professor/atualizaraluno">Atualizar Aluno</Link>
+        </div>*/}
 
         <div className="text-white text-xl font-bold">
           <Link href="/professor/novoaluno">Novo Aluno</Link>
