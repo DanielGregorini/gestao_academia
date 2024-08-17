@@ -2,10 +2,11 @@ import React from "react";
 import Link from "next/link";
 
 function Navbar() {
-  
   return (
     <nav className="flex justify-between items-center p-4 bg-gray-800">
-      <div className="text-white text-xl font-bold">Logo</div>
+      <div className="text-white text-xl font-bold">
+        <Link href="/">logo</Link>
+      </div>
 
       <div className="flex justify-between items-center w-1/4">
         <div className="text-white text-xl font-bold">
