@@ -1,8 +1,11 @@
+
 function AlunoPage() {
   
   return (
     <main>
-      <div>aluno page</div>
+      <div style={{ minHeight: "50rem" }}>
+        <h1>ALUNO PAGE</h1>
+      </div>
     </main>
   );
 }
