@@ -1,0 +1,6 @@
+@academia_api = http://localhost:5298
+
+GET {{academia_api}}/
+Accept: application/json
+
+###
