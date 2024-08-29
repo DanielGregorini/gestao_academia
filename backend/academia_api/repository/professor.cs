@@ -26,7 +26,7 @@ namespace academia_api.repository
         {
             using (var _context = new AcademiaContext())
             {
-                await _context.Set<Aluno>().AddAsync(e);
+                await _context.Set<Professor>().AddAsync(e);
                 await _context.SaveChangesAsync();
             }
         }
