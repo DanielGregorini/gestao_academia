@@ -4,47 +4,47 @@ using academia_api.model;
 
 namespace academia_api.repository
 {
-    public class AlunoRepository : IRepository<Aluno>
+    public class TreinoRepository : IRepository<Treino>
     {
-        public async Task<Aluno?> GetByIdAsync(int id)
+        public async Task<Treino?> GetByIdAsync(int id)
         {
             using (var _context = new AcademiaContext())
             {
-                return await _context.Set<Aluno>().FindAsync(id);
+                return await _context.Set<Treino>().FindAsync(id);
             }
         }
 
-        public async Task<IEnumerable<Aluno>> GetAllAsync()
+        public async Task<IEnumerable<Treino>> GetAllAsync()
         {
             using (var _context = new AcademiaContext())
             {
-                return await _context.Set<Aluno>().ToListAsync();
+                return await _context.Set<Treino>().ToListAsync();
             }
         }
 
-        public async Task AddAsync(Aluno e)
+        public async Task AddAsync(Treino e)
         {
             using (var _context = new AcademiaContext())
             {
-                await _context.Set<Aluno>().AddAsync(e);
+                await _context.Set<Treino>().AddAsync(e);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task UpdateAsync(Aluno e)
+        public async Task UpdateAsync(Treino e)
         {
             using (var _context = new AcademiaContext())
             {
-                _context.Set<Aluno>().Update(e);
+                _context.Set<Treino>().Update(e);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task RemoveAsync(Aluno e)
+        public async Task RemoveAsync(Treino e)
         {
             using (var _context = new AcademiaContext())
             {
-                _context.Set<Aluno>().Remove(e);
+                _context.Set<Treino>().Remove(e);
                 await _context.SaveChangesAsync();
             }
         }

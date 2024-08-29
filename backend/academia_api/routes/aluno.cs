@@ -1,7 +1,5 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
+using academia_api.model;
+using academia_api.repository;
 
 namespace academia_api.routes
 {
@@ -20,10 +18,4 @@ namespace academia_api.routes
         }
     }
 
-    public class Aluno
-    {
-        public int Id { get; set; }
-        public string Nome { get; set; }
-        public int Idade { get; set; }
-    }
 }

@@ -4,25 +4,25 @@ using academia_api.model;
 
 namespace academia_api.repository
 {
-    public class AlunoRepository : IRepository<Aluno>
+    public class ProfessorRepository : IRepository<Professor>
     {
-        public async Task<Aluno?> GetByIdAsync(int id)
+        public async Task<Professor?> GetByIdAsync(int id)
         {
             using (var _context = new AcademiaContext())
             {
-                return await _context.Set<Aluno>().FindAsync(id);
+                return await _context.Set<Professor>().FindAsync(id);
             }
         }
 
-        public async Task<IEnumerable<Aluno>> GetAllAsync()
+        public async Task<IEnumerable<Professor>> GetAllAsync()
         {
             using (var _context = new AcademiaContext())
             {
-                return await _context.Set<Aluno>().ToListAsync();
+                return await _context.Set<Professor>().ToListAsync();
             }
         }
 
-        public async Task AddAsync(Aluno e)
+        public async Task AddAsync(Professor e)
         {
             using (var _context = new AcademiaContext())
             {
@@ -31,20 +31,20 @@ namespace academia_api.repository
             }
         }
 
-        public async Task UpdateAsync(Aluno e)
+        public async Task UpdateAsync(Professor e)
         {
             using (var _context = new AcademiaContext())
             {
-                _context.Set<Aluno>().Update(e);
+                _context.Set<Professor>().Update(e);
                 await _context.SaveChangesAsync();
             }
         }
 
-        public async Task RemoveAsync(Aluno e)
+        public async Task RemoveAsync(Professor e)
         {
             using (var _context = new AcademiaContext())
             {
-                _context.Set<Aluno>().Remove(e);
+                _context.Set<Professor>().Remove(e);
                 await _context.SaveChangesAsync();
             }
         }
