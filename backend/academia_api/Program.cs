@@ -31,5 +31,7 @@ app.MapGet("/", () =>
 .WithOpenApi();
 
 app.MapAlunoRoutes();
+app.MapProfessorRoutes();
+app.MapTreinoRoutes();
 
 app.Run();

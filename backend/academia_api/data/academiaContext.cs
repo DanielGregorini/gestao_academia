@@ -12,7 +12,6 @@ namespace academia_api.data
         public DbSet<Aluno> Alunos { get; set; }
         public DbSet<Treino> Treinos { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
