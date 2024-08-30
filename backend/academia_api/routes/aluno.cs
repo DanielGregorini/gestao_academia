@@ -7,12 +7,19 @@ namespace academia_api.routes
     {
         public static void MapAlunoRoutes(this IEndpointRouteBuilder app)
         {
+            app.MapGet("/aluno/login", async () =>
+            {
+                //implementar a validação aqui
+                return Results.Ok();
+            });
+
             app.MapGet("/aluno", async () =>
             {
                 var alunoRepository = new AlunoRepository();
                 var alunos = await alunoRepository.GetAllAsync();
                 return Results.Ok(alunos);
-            });
+            })
+            .RequireAuthorization();
 
             app.MapGet("/aluno/{id:int}", async (int id) =>
             {

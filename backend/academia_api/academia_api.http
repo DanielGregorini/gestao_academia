@@ -1,6 +1,15 @@
-@academia_api = http://localhost:5298
+@host = http://localhost:5298
 
-GET {{academia_api}}/
-Accept: application/json
+### Post a new aluno
+POST {{host}}/aluno HTTP/1.1
+Content-Type: application/json
 
-###
+{
+    "IdProfessor": 1,
+    "IdAcademia": 1,
+    "Nome": "Aluno 1",
+    "Cpf": "123.456.789-00",
+    "DtNascimento": "2000-01-01",
+    "Login": "aluno1",
+    "Senha": "senha123"
+}

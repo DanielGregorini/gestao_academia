@@ -19,7 +19,7 @@ namespace academia_api.data
                 //ver os log do efcore
                 //optionsBuilder.LogTo(System.Console.WriteLine); ;
 
-                string connectionString = "Server=localhost;Database=db_revendedora;User=root;Password=admin;";
+                string connectionString = "Server=localhost;Database=db_academia;User=projeto;Password=Projeto_academia@1;";
 
                 optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
@@ -29,37 +29,63 @@ namespace academia_api.data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            /*
-             // Configuração das chaves primárias
-            modelBuilder.Entity<Fornecedor>()
-                .HasKey(f => f.ID);
-            modelBuilder.Entity<Fornecedor>()
-                .Property(f => f.ID)
+
+            // Configurações para Academia
+            modelBuilder.Entity<Academia>()
+                .HasKey(a => a.IdAcademia);
+            modelBuilder.Entity<Academia>()
+                .Property(a => a.IdAcademia)
+                .ValueGeneratedOnAdd();  // Assegura que o Id é gerado automaticamente
+            modelBuilder.Entity<Academia>()
+                .HasMany(a => a.Professores)
+                .WithOne(p => p.Academia)
+                .HasForeignKey(p => p.IdAcademia);
+            modelBuilder.Entity<Academia>()
+                .HasMany(a => a.Alunos)
+                .WithOne(a => a.Academia)
+                .HasForeignKey(a => a.IdAcademia);
+
+            // Configurações para Professor
+            modelBuilder.Entity<Professor>()
+                .HasKey(p => p.IdProfessor);
+            modelBuilder.Entity<Professor>()
+                .Property(p => p.IdProfessor)
                 .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Professor>()
+                .HasMany(p => p.Alunos)
+                .WithOne(a => a.Professor)
+                .HasForeignKey(a => a.IdProfessor);
+            modelBuilder.Entity<Professor>()
+                .HasOne(p => p.Academia)
+                .WithMany(a => a.Professores)
+                .HasForeignKey(p => p.IdAcademia);
 
-            modelBuilder.Entity<Cliente>()
-                .HasKey(c => c.ID);
-            modelBuilder.Entity<Cliente>()
-                .Property(c => c.ID)
+            // Configurações para Aluno
+            modelBuilder.Entity<Aluno>()
+                .HasKey(a => a.IdAluno);
+            modelBuilder.Entity<Aluno>()
+                .Property(a => a.IdAluno)
                 .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Aluno>()
+                .HasOne(a => a.Professor)
+                .WithMany(p => p.Alunos)
+                .HasForeignKey(a => a.IdProfessor);
+            modelBuilder.Entity<Aluno>()
+                .HasMany(a => a.Treinos)
+                .WithOne(t => t.Aluno)
+                .HasForeignKey(t => t.IdAluno);
 
-
-            */
-            modelBuilder.Entity<Academia>().HasData(
-                new Academia { IdAcademia = 1, Nome = "Academia X", Cnpj = "12.345.678/0001-00", Endereco = "Rua A, 123" }
-            );
-
-            modelBuilder.Entity<Professor>().HasData(
-                new Professor { IdProfessor = 1, IdAcademia = 1, Nome = "Professor Y", Cpf = "123.456.789-00", DtNascimento = new DateTime(1980, 1, 1), Login = "prof_y", Senha = "senha123" }
-            );
-
-            modelBuilder.Entity<Aluno>().HasData(
-                new Aluno { IdAluno = 1, IdProfessor = 1, IdAcademia = 1, Nome = "Aluno Z", Cpf = "987.654.321-00", DtNascimento = new DateTime(2000, 5, 15), Login = "aluno_z", Senha = "senha456" }
-            );
-
-            modelBuilder.Entity<Treino>().HasData(
-                new Treino { IdTreino = 1, IdAluno = 1, Letra = "A", DiaSemana = "Segunda", ListaExercicios = "Supino, Agachamento, Barra Fixa" }
-            );
+            // Configurações para Treino
+            modelBuilder.Entity<Treino>()
+                .HasKey(t => t.IdTreino);
+            modelBuilder.Entity<Treino>()
+                .Property(t => t.IdTreino)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Treino>()
+                .HasOne(t => t.Aluno)
+                .WithMany(a => a.Treinos)
+                .HasForeignKey(t => t.IdAluno); ;
+            
         }
     }
 }

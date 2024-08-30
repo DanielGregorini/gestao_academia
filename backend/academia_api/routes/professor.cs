@@ -7,6 +7,14 @@ namespace academia_api.routes
     {
         public static void MapProfessorRoutes(this IEndpointRouteBuilder app)
         {
+
+            app.MapGet("/professor/login", async () =>
+            {
+                //implementar a validação aqui
+             
+                return Results.Ok();
+            });
+
             app.MapGet("/professor", async () =>
             {
                 var professorRepository = new ProfessorRepository();

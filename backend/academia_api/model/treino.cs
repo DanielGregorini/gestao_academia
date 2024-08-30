@@ -1,6 +1,8 @@
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace academia_api.model
 {
+    [Table("tb_treino")]
     public class Treino
     {
         public int IdTreino { get; set; }
