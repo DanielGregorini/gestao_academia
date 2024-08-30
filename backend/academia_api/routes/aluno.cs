@@ -21,6 +21,13 @@ namespace academia_api.routes
                 return aluno != null ? Results.Ok(aluno) : Results.NotFound();
             });
 
+            app.MapGet("/aluno/professor{id:int}", async (int id) =>
+            {
+                var alunoRepository = new AlunoRepository();
+                var aluno = await alunoRepository.GetByIdAsync(id);
+                return aluno != null ? Results.Ok(aluno) : Results.NotFound();
+            });
+
             app.MapPost("/aluno", async (HttpRequest request) =>
             {
                 var aluno = await request.ReadFromJsonAsync<Aluno>();

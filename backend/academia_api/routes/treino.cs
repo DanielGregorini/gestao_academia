@@ -21,6 +21,13 @@ namespace academia_api.routes
                 return treino != null ? Results.Ok(treino) : Results.NotFound();
             });
 
+            app.MapGet("/treino/aluno/{id:int}", async (int id) =>
+            {
+                var treinoRepository = new TreinoRepository();
+                var treino = await treinoRepository.GetAllTreinoPorAlunoAsync(id);
+                return treino != null ? Results.Ok(treino) : Results.NotFound();
+            });
+
             app.MapPost("/treino", async (HttpRequest request) =>
             {
                 var treino = await request.ReadFromJsonAsync<Treino>();

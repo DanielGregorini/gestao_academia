@@ -21,6 +21,15 @@ namespace academia_api.repository
                 return await _context.Set<Aluno>().ToListAsync();
             }
         }
+        public async Task<IEnumerable<Aluno>> GetAllAlunoPorProfessorAsync(int idProfessor)
+        {
+            using (var _context = new AcademiaContext())
+            {
+                return await _context.Set<Aluno>()
+                                        .Where(aluno => aluno.IdProfessor == idProfessor)
+                                        .ToListAsync();
+                }
+        }
 
         public async Task AddAsync(Aluno e)
         {

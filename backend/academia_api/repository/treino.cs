@@ -22,6 +22,17 @@ namespace academia_api.repository
             }
         }
 
+        public async Task<IEnumerable<Treino>> GetAllTreinoPorAlunoAsync(int idAluno)
+        {
+            using (var _context = new AcademiaContext())
+            {
+                // Filtra os treinos pelo idAluno fornecido
+                return await _context.Set<Treino>()
+                                    .Where(treino => treino.IdAluno == idAluno)
+                                    .ToListAsync();
+            }
+        }
+
         public async Task AddAsync(Treino e)
         {
             using (var _context = new AcademiaContext())
