@@ -6,6 +6,18 @@ namespace academia_api.repository
 {
     public class ProfessorRepository : IRepository<Professor>
     {
+
+        public async Task<Professor?> LoginProfessor(string login, string password)
+        {
+            using (var _context = new AcademiaContext())
+            {
+                var professor = await _context.Professores
+                    .FirstOrDefaultAsync(e => e.Login == login && e.Senha == password);
+
+                return professor;
+            }
+        }
+
         public async Task<Professor?> GetByIdAsync(int id)
         {
             using (var _context = new AcademiaContext())

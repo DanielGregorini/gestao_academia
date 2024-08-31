@@ -1,5 +1,6 @@
 using academia_api.model;
 using academia_api.repository;
+using academia_api.services;
 
 namespace academia_api.routes
 {
@@ -8,12 +9,26 @@ namespace academia_api.routes
         public static void MapProfessorRoutes(this IEndpointRouteBuilder app)
         {
 
-            app.MapGet("/professor/login", async () =>
+            app.MapPost("/professor/login", async (LoginRequest request) =>
             {
-                //implementar a validação aqui
-             
-                return Results.Ok();
+                if (request == null || string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Senha))
+                {
+                    return Results.BadRequest("Invalid login request");
+                }
+
+                var professorRepository = new ProfessorRepository();
+                var professorLogin = await professorRepository.LoginProfessor(request.Login, request.Senha);
+
+                if (professorLogin == null)
+                {
+                    return Results.Json(new { Message = "Invalid credentials" }, statusCode: 401);
+                }
+
+                // Gerar e retornar um token
+                var token = TokenService.GenerateTokenProfessor(professorLogin);
+                return Results.Ok(new { Token = token });
             });
+
 
             app.MapGet("/professor", async () =>
             {
