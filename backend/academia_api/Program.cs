@@ -12,11 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 Env.Load();
 
 var secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
+
+// Se a chave não for encontrada, use uma chave padrão (apenas para desenvolvimento ou testes)
 if (string.IsNullOrEmpty(secretKey))
 {
     secretKey = "chave_aleatoria"; // Aviso: Use apenas para desenvolvimento ou testes!
 }
 
+// Crie a chave de assinatura usando a chave secreta
 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
 // Adiciona serviços ao contêiner.
@@ -31,7 +34,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuerSigningKey = true,
-             IssuerSigningKey = signingKey,
+            IssuerSigningKey = signingKey,
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
@@ -42,6 +45,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+app.UseAuthentication(); // Certifique-se de que a autenticação está configurada no pipeline
+app.UseAuthorization(); 
 
 // Configura o pipeline de requisição HTTP.
 if (app.Environment.IsDevelopment())
@@ -56,9 +62,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
-
 app.MapGet("/", () =>
 {
     string return_api = "API na escuta!!!";
@@ -67,6 +70,7 @@ app.MapGet("/", () =>
 .WithName("/")
 .WithOpenApi();
 
+//mapeando as rotas
 app.MapAlunoRoutes();
 app.MapProfessorRoutes();
 app.MapTreinoRoutes();

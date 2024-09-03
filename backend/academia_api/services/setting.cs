@@ -2,6 +2,9 @@ namespace academia_api.services
 {
     public static class Settings
     {
-        public static string Secret = "fedaf7d8863b48e197b9287d492b708e";
+        private static readonly string secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
+
+        // Se a chave não for encontrada, use uma chave padrão (apenas para desenvolvimento ou testes)
+        public static string Secret { get; } = string.IsNullOrEmpty(secretKey) ? "chave_aleatoria_de_teste_32_chars" : secretKey;
     }
 }

@@ -1,9 +1,11 @@
 @host = http://localhost:5298
-@token =eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InByb2Zlc3NvcjEiLCJyb2xlIjoic2VuaGExIiwiVXNlclR5cGUiOiJwcm9mZXNzb3IiLCJuYmYiOjE3MjUxMzIzNTEsImV4cCI6MTcyNzc5NjM1MSwiaWF0IjoxNzI1MTMyMzUxfQ.PnLk_37Ul4Z1U_0hjAg6TiAF55sNppgFuYAcJFplOJ8
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InByb2Zlc3NvcjEiLCJyb2xlIjoic2VuaGExIiwiVXNlclR5cGUiOiJwcm9mZXNzb3IiLCJuYmYiOjE3MjUzMTEwNDMsImV4cCI6MTcyNzk3NTA0MywiaWF0IjoxNzI1MzExMDQzfQ.H9kZSbWmYocmkFc-omp2HW51233a5gw3D4td3IH95jM
 
 ###
 GET {{host}}/aluno HTTP/1.1
 Authorization: Bearer {{token}}
+
+
 
 ### Post a new professor
 POST {{host}}/professor HTTP/1.1
