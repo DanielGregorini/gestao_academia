@@ -1,14 +1,15 @@
-using academia_api.routes;
-using academia_api.services;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Text;
 using DotNetEnv;
+using academia_api.routes;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Carrega as variáveis de ambiente do arquivo .env
+// Carregar as variáveis de ambiente do arquivo .env
 Env.Load();
 
 var secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
@@ -16,14 +17,22 @@ var secretKey = Environment.GetEnvironmentVariable("SECRET_KEY");
 // Se a chave não for encontrada, use uma chave padrão (apenas para desenvolvimento ou testes)
 if (string.IsNullOrEmpty(secretKey))
 {
-    secretKey = "chave_aleatoria"; // Aviso: Use apenas para desenvolvimento ou testes!
+    secretKey = "chave_aleatoria";  // Aviso: Use apenas para desenvolvimento ou testes!
 }
 
-// Crie a chave de assinatura usando a chave secreta
+// Criar a chave de assinatura usando a chave secreta
 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
-// Adiciona serviços ao contêiner.
-// Configura o Swagger/OpenAPI
+// Configurar o CORS para permitir requisições de qualquer origem
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
+// Adicionar serviços ao contêiner
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -46,10 +55,13 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-app.UseAuthentication(); // Certifique-se de que a autenticação está configurada no pipeline
-app.UseAuthorization(); 
+// Aplicar o middleware de CORS
+app.UseCors();
 
-// Configura o pipeline de requisição HTTP.
+app.UseAuthentication();
+app.UseAuthorization();
+
+// Configurar o pipeline de requisição HTTP para Swagger
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -62,15 +74,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/", () =>
-{
-    string return_api = "API na escuta!!!";
-    return return_api;
-})
-.WithName("/")
-.WithOpenApi();
+app.MapGet("/", () => "API na escuta!!!").WithName("/").WithOpenApi();
 
-//mapeando as rotas
+// Mapear as rotas
 app.MapAlunoRoutes();
 app.MapProfessorRoutes();
 app.MapTreinoRoutes();

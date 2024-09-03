@@ -1,17 +1,69 @@
-"use client";
+"use client"
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import Link from "next/link";
+import { useRouter } from 'next/navigation'; // Importando o useRouter de 'next/router'
+import type { NextPage } from 'next'; // Para definir o tipo da página como NextPage
 
-function LoginPage() {
+interface LoginData {
+  token: string;
+  userType: string;
+}
+
+const LoginPage: NextPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const router = useRouter(); // Instância do useRouter para navegação
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    //implementar o login
-    console.log("Username:", username);
-    console.log("Password:", password);
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    let loginUrl = `${backendUrl}/aluno/login`;
+
+    try {
+      let response = await fetch(loginUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          Login: username,
+          Senha: password,
+        }),
+      });
+
+      if (!response.ok) {
+        loginUrl = `${backendUrl}/professor/login`;
+        response = await fetch(loginUrl, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Login: username,
+            Senha: password,
+          }),
+        });
+      }
+
+      if (response.ok) {
+        const data: LoginData = await response.json();
+        const userType = loginUrl.includes("aluno") ? "Aluno" : "Professor";
+
+        localStorage.setItem(
+          "loginToken",
+          JSON.stringify({ token: data.token, userType })
+        );
+
+        router.push(
+          userType === "Aluno" ? "/aluno" : "/professor"
+        );
+      } else {
+        const error = await response.json();
+        console.error("Login failed:", error);
+      }
+    } catch (error) {
+      console.error("Network error:", error);
+    }
   };
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -25,11 +77,6 @@ function LoginPage() {
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="min-w-96">
-
-        <div className="flex items-center justify-center">
-          <Link href="/">Professor</Link>
-        </div>
-
         <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
           <h1 className="text-2xl font-bold mb-6 text-center">
             Login Academia
@@ -80,6 +127,6 @@ function LoginPage() {
       </div>
     </main>
   );
-}
+};
 
 export default LoginPage;
