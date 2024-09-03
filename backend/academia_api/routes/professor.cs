@@ -24,11 +24,15 @@ namespace academia_api.routes
                     return Results.Json(new { Message = "Invalid credentials" }, statusCode: 401);
                 }
 
-                // Gerar e retornar um token
                 var token = TokenService.GenerateTokenProfessor(professorLogin);
-                return Results.Ok(new { Token = token });
-            });
 
+                professorLogin.Senha = null;
+                
+                return Results.Ok(new { 
+                    Token = token,
+                    Professor = professorLogin
+                });
+            });
 
             app.MapGet("/professor", async () =>
             {
