@@ -6,12 +6,6 @@ const EditarTreinosPage = () => {
   const router = useRouter();
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  /*
-  useEffect(() => {
-    if (!router) return; // Certifique-se de que o router está disponível
-  }, [router]);
-  */
-
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const id = event.target.value;
     setSelectedId(id);

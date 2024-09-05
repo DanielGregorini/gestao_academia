@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import ProfessorId from "../professor/ProfessorId";
+import ProfessorId from "../professor/professorId";
 
 function NavbarProfessor() {
   return (
@@ -14,11 +14,14 @@ function NavbarProfessor() {
           <Link href="/professor/editartreinos">Editar treinos</Link>
         </div>
 
-        
+        <div className="text-white text-xl font-bold">
+          <Link href="/professor/meusalunos">Meus Alunos</Link>
+        </div>
 
         <div className="text-white text-xl font-bold">
           <Link href="/professor/novoaluno">Novo Aluno</Link>
         </div>
+        
       </div>
 
       <div className="flex justify-end items-center w-1/3">
@@ -34,4 +37,4 @@ function NavbarProfessor() {
   );
 }
 
-export default NavbarProfessor;
+export default NavbarProfessor; 

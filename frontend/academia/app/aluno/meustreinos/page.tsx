@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/navigation"; // Utilize 'next/router'
 import Aluno from '@/utils/classes/aluno';
-import ResumoTreino from '@/components/meustreinos/ResumoTreino';
+import ResumoTreino from '@/components/meustreinos/resumoTreino';
 
 function MeusTreinosPage() {
   const router = useRouter();

@@ -48,10 +48,11 @@ namespace academia_api.routes
                 return aluno != null ? Results.Ok(aluno) : Results.NotFound();
             });
 
-            app.MapGet("/aluno/professor{id:int}", async (int id) =>
+            app.MapGet("/aluno/professor/{id:int}", async (int id) =>
             {
+                Console.WriteLine(id);
                 var alunoRepository = new AlunoRepository();
-                var aluno = await alunoRepository.GetByIdAsync(id);
+                var aluno = await alunoRepository.GetAllAlunoPorProfessorAsync(id);
                 return aluno != null ? Results.Ok(aluno) : Results.NotFound();
             });
 

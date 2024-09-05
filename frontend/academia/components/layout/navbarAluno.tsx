@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link"
-import AlunoId from "../aluno/AlunoId";
+import AlunoId from "../aluno/alunoId";
 
 function NavbarAluno() {
   return (

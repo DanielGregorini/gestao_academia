@@ -7,10 +7,7 @@ import { useRouter } from "next/navigation";
 function NovoAluno() {
   const router = useRouter();
 
-  console.log("amora");
-
   const [novoAluno, setNovoAluno] = useState<Aluno>(new Aluno());
-  const [date, setDate] = useState<string>('');
 
   useEffect(() => {
     const storedData = localStorage.getItem("loginToken");
@@ -38,22 +35,21 @@ function NovoAluno() {
       setNovoAluno((prev) => {
         const updatedAluno = {
           ...prev,
-          [id]: new Date(value)
+          [id]: new Date(value),
         };
-        console.log('Updated Date:', updatedAluno[id]);
+        console.log("Updated Date:", updatedAluno[id]);
         return updatedAluno;
       });
     } else {
       setNovoAluno((prev) => {
-        const updatedAluno = {
+        const updatedAluno: any = {
           ...prev,
-          [id]: value
+          [id]: value,
         };
-        console.log('Updated Value:', updatedAluno[id]);
+        console.log("Updated Value:", updatedAluno[id]);
         return updatedAluno;
       });
     }
-    
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -78,6 +74,8 @@ function NovoAluno() {
         console.log("novo aluno:", alunoCriado);
 
         setNovoAluno(new Aluno());
+        alert("Aluno cadastrado");
+        router.push("/professor/meusalunos");
       } else {
         const error = await response.json();
         console.error("Falha ao atualizar o perfil:", error);
@@ -89,14 +87,15 @@ function NovoAluno() {
 
   const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newDate = event.target.value;
-    setDate(newDate);
     let aluno = novoAluno;
-      aluno.dtNascimento = new Date(newDate);
-      setNovoAluno(aluno);
+
+    aluno.dtNascimento = new Date(newDate);
+    setNovoAluno(aluno);
+
     console.log("Data selecionada:", newDate);
     console.log("Data selecionada:", aluno);
     // Adicione mais lógica aqui conforme necessário
-};
+  };
 
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
@@ -147,10 +146,14 @@ function NovoAluno() {
               Data de nascimento do aluno:
             </label>
             <input
-                type="date"
-                id="dateInput"
-                value={novoAluno.dtNascimento ? new Date(novoAluno.dtNascimento).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
-                onChange={handleChangeDate}
+              type="date"
+              id="dateInput"
+              value={
+                novoAluno.dtNascimento
+                  ? new Date(novoAluno.dtNascimento).toISOString().split("T")[0]
+                  : new Date().toISOString().split("T")[0]
+              }
+              onChange={handleChangeDate}
             />
           </div>
 
