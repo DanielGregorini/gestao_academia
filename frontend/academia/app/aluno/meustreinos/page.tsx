@@ -1,44 +1,61 @@
-import React from "react";
-import ResumoTreino from "@/components/meustreinos/ResumoTreino";
-import Treino from "@/utils/classes/treino";
-
-const treino1 = new Treino(
-  1,                    // id_treino
-  101,                  // id_aluno
-  'A',                  // letra
-  'Segunda-feira',      // dia_semana
-  'Supino; Agachamento; Flexão'  // lista_exercicios
-);
-
-const treino2 = new Treino(
-  2,                    // id_treino
-  102,                  // id_aluno
-  'B',                  // letra
-  'Quarta-feira',       // dia_semana
-  'Remada; Leg Press; Barra Fixa'  // lista_exercicios
-);
-
-const treino3 = new Treino(
-  3,                    // id_treino
-  103,                  // id_aluno
-  'C',                  // letra
-  'Sexta-feira',        // dia_semana
-  'Desenvolvimento; Extensão de Tríceps; Rosca Direta'  // lista_exercicios
-);
-
-// Vetor (array) contendo os objetos Treino
-const treinos: Treino[] = [treino1, treino2, treino3];
+"use client"
+import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/navigation"; // Utilize 'next/router'
+import Aluno from '@/utils/classes/aluno';
+import ResumoTreino from '@/components/meustreinos/ResumoTreino';
 
 function MeusTreinosPage() {
+  const router = useRouter();
+  const [aluno, setAluno] = useState<Aluno | null>(null);
+  const [treinos, setTreinos] = useState([]); // Estado para armazenar os treinos
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('loginToken');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      const initialAluno: Aluno = parsedData.userDetails ? parsedData.userDetails : null;
+      setAluno(initialAluno);
+
+      const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+      let treinoAlunoUrl = `${backendUrl}/treino/aluno/${initialAluno.idAluno}`; // Supondo que a URL é assim
+
+      async function fetchData() {
+        console.log(parsedData.token);
+        try {
+          let response = await fetch(treinoAlunoUrl, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${parsedData.token}` // Utilizando o token de autorização
+            }
+          });
+
+          if (response.ok) {
+            const treinosData = await response.json();
+            setTreinos(treinosData); // Assume que a resposta é um array de treinos
+            console.log(treinosData)
+          } else {
+            const error = await response.json();
+            console.error("Failed to fetch treinos:", error);
+          }
+        } catch (error) {
+          console.error("Network error:", error);
+        }
+      }
+
+      fetchData();
+    } else {
+      router.push("/login");
+    }
+  }, [router]);
+
   return (
     <main style={{ minHeight: "50rem" }}>
-      <h1 className="text-center text-4xl mb-10">Meus Treinos:</h1>
-      <div className="flex justify-center items-center w-full">
+      <div className='flex mt-10 justify-center'>
         {treinos.map((treino) => (
-          <ResumoTreino 
-            treino = {treino}
-          />
+          <ResumoTreino key={treino.idTreino} treino={treino} />
         ))}
+        
       </div>
     </main>
   );

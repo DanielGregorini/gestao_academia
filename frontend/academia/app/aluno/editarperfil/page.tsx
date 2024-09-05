@@ -1,31 +1,22 @@
 "use client";
 import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import { useRouter } from "next/navigation";
 import Input from "@/components/form/Input";
 import Aluno from "@/utils/classes/aluno";
-import { useRouter } from "next/navigation";
 
-function NovoAluno() {
+function EditarPerfilPage() {
   const router = useRouter();
-
-  console.log("amora");
-
-  const [novoAluno, setNovoAluno] = useState<Aluno>(new Aluno());
-  const [date, setDate] = useState<string>('');
+  const [aluno, setAluno] = useState<Aluno>(new Aluno());
 
   useEffect(() => {
     const storedData = localStorage.getItem("loginToken");
 
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-
-      const idProfessor: number = parsedData.userDetails
-        ? parsedData.userDetails.idProfessor
+      const initialAluno: Aluno = parsedData.userDetails
+        ? parsedData.userDetails
         : null;
-      let aluno = novoAluno;
-      aluno.idProfessor = idProfessor;
-      aluno.dtNascimento = new Date();
-      aluno.idAcademia = 1;
-      setNovoAluno(aluno);
+      setAluno(initialAluno);
     } else {
       router.push("/login");
     }
@@ -33,51 +24,45 @@ function NovoAluno() {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const { id, value } = event.target;
-    console.log(id, " ", value);
-    if (id === "dt_nascimento") {
-      setNovoAluno((prev) => {
-        const updatedAluno = {
-          ...prev,
-          [id]: new Date(value)
-        };
-        console.log('Updated Date:', updatedAluno[id]);
-        return updatedAluno;
-      });
-    } else {
-      setNovoAluno((prev) => {
-        const updatedAluno = {
-          ...prev,
-          [id]: value
-        };
-        console.log('Updated Value:', updatedAluno[id]);
-        return updatedAluno;
-      });
-    }
-    
+    setAluno({
+      ...aluno,
+      [id]: id === "dt_nascimento" ? new Date(value) : value,
+    });
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    await event.preventDefault();
-    console.log("Aluno cadastrado:", novoAluno);
-    const backendUrl =
-      (await process.env.BACKEND_URL) || "http://localhost:5298";
+    event.preventDefault();
 
-    let atualizarUrl = `${backendUrl}/aluno/`;
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    let atualizarUrl = `${backendUrl}/aluno/${aluno.idAluno}`;
 
     try {
       let response = await fetch(atualizarUrl, {
-        method: "POST",
+        method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(novoAluno),
+        body: JSON.stringify(aluno),
       });
 
       if (response.ok) {
-        const alunoCriado: Aluno = await response.json();
-        console.log("novo aluno:", alunoCriado);
+        const updatedAluno: Aluno = await response.json();
+        console.log("Aluno atualizado:", updatedAluno);
 
-        setNovoAluno(new Aluno());
+        // Busca o token de login existente
+        const storedData = localStorage.getItem("loginToken");
+        if (storedData) {
+          const parsedData = JSON.parse(storedData);
+
+          // Atualiza os detalhes do aluno dentro do token
+          parsedData.userDetails = updatedAluno;
+
+          // Salva o token atualizado de volta ao localStorage
+          localStorage.setItem("loginToken", JSON.stringify(parsedData));
+        }
+
+        //Redirecionamento baseado no tipo de usuário
+        router.push("/aluno");
       } else {
         const error = await response.json();
         console.error("Falha ao atualizar o perfil:", error);
@@ -87,22 +72,11 @@ function NovoAluno() {
     }
   };
 
-  const handleChangeDate = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newDate = event.target.value;
-    setDate(newDate);
-    let aluno = novoAluno;
-      aluno.dtNascimento = new Date(newDate);
-      setNovoAluno(aluno);
-    console.log("Data selecionada:", newDate);
-    console.log("Data selecionada:", aluno);
-    // Adicione mais lógica aqui conforme necessário
-};
-
   return (
     <main className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center">
-          Cadastro de novo aluno
+          Atualizar perfil
         </h1>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="form-group">
@@ -115,7 +89,7 @@ function NovoAluno() {
             <Input
               type="text"
               id="nome"
-              value={novoAluno.nome}
+              value={aluno.nome}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -132,7 +106,7 @@ function NovoAluno() {
             <Input
               type="text"
               id="cpf"
-              value={novoAluno.cpf}
+              value={aluno.cpf}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -146,11 +120,21 @@ function NovoAluno() {
             >
               Data de nascimento do aluno:
             </label>
-            <input
-                type="date"
-                id="dateInput"
-                value={novoAluno.dtNascimento ? new Date(novoAluno.dtNascimento).toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}
-                onChange={handleChangeDate}
+            <Input
+              type="date"
+              id="dt_nascimento"
+              value={
+                aluno.dtNascimento
+                  ? aluno.dtNascimento instanceof Date
+                    ? aluno.dtNascimento.toISOString().substring(0, 10)
+                    : new Date(aluno.dtNascimento)
+                        .toISOString()
+                        .substring(0, 10) // Converte string para Date se necessário
+                  : ""
+              }
+              onChange={handleInputChange}
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
             />
           </div>
 
@@ -164,7 +148,7 @@ function NovoAluno() {
             <Input
               type="text"
               id="login"
-              value={novoAluno.login}
+              value={aluno.login}
               onChange={handleInputChange}
               required
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -176,14 +160,13 @@ function NovoAluno() {
               htmlFor="senha"
               className="block mb-2 text-md font-medium text-gray-700"
             >
-              Senha:
+              Nova Senha:
             </label>
             <Input
               type="password"
               id="senha"
-              value={novoAluno.senha}
+              value={aluno.senha}
               onChange={handleInputChange}
-              required
               minLength={4}
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
             />
@@ -193,7 +176,7 @@ function NovoAluno() {
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            Cadastrar
+            Atualizar
           </button>
         </form>
       </div>
@@ -201,4 +184,4 @@ function NovoAluno() {
   );
 }
 
-export default NovoAluno;
+export default EditarPerfilPage;

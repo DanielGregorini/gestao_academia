@@ -1,8 +1,8 @@
 
 class Academia {
-    IdAcademia?: number;
-    Cnpj?: string;
-    Endereco?: string;
+    idAcademia?: number;
+    cnpj?: string;
+    endereco?: string;
 }
 
 export default Academia;

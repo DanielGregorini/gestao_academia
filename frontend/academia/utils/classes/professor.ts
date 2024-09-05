@@ -1,11 +1,11 @@
 class Professor {
-    IdProfessor?: number;
-    IdAcademia?: number;
-    Nome?: string;
-    Cpf?: string;
-    DtNascimento?: Date;
-    Login?: string;
-    Senha?: string;
+    idProfessor?: number;
+    idAcademia?: number;
+    nome?: string;
+    cpf?: string;
+    dtNascimento?: Date;
+    login?: string;
+    senha?: string;
 }
 
 export default Professor;

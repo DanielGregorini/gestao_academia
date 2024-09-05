@@ -1,12 +1,12 @@
 class Aluno {
-  IdAluno?: number;
-  IdProfessor?: number;
-  IdAcademia?: number;
-  Nome?: string;
-  Cpf?: string;
-  DtNascimento?: Date;
-  LayoutPropsogin?: string;
-  Senha?: string;
+  idAluno?: number;
+  idProfessor?: number;
+  idAcademia?: number;
+  nome?: string;
+  cpf?: string;
+  dtNascimento?: Date;
+  login?: string
+  senha?: string;
 }
 
 export default Aluno;

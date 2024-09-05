@@ -26,7 +26,8 @@ namespace academia_api.routes
                 var treinoRepository = new TreinoRepository();
                 var treino = await treinoRepository.GetAllTreinoPorAlunoAsync(id);
                 return treino != null ? Results.Ok(treino) : Results.NotFound();
-            });
+            })
+            .RequireAuthorization();
 
             app.MapPost("/treino", async (HttpRequest request) =>
             {

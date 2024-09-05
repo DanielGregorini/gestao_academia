@@ -58,7 +58,6 @@ namespace academia_api.routes
             app.MapPost("/aluno", async (HttpRequest request) =>
             {
                 var aluno = await request.ReadFromJsonAsync<Aluno>();
-
                 // Verifica se o objeto aluno foi desserializado corretamente
                 if (aluno == null)
                 {
@@ -88,7 +87,13 @@ namespace academia_api.routes
                     return Results.NotFound("Aluno não encontrado.");
                 }
 
+                if(aluno.Senha == null){
+                    aluno.Senha = existingAluno.Senha;
+                }
+
                 aluno.IdAluno = id;
+
+                aluno.Senha = null;
 
                 await alunoRepository.UpdateAsync(aluno);
 

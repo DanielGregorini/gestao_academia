@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "academia_api", "academia_api\academia_api.csproj", "{B1BDC4FE-B104-4498-9C5C-D53349258DF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "academia_api", "academia_api\academia_api.csproj", "{F27AD043-427A-4F2A-B3DD-2A4BBE644116}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B1BDC4FE-B104-4498-9C5C-D53349258DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1BDC4FE-B104-4498-9C5C-D53349258DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1BDC4FE-B104-4498-9C5C-D53349258DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1BDC4FE-B104-4498-9C5C-D53349258DF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F27AD043-427A-4F2A-B3DD-2A4BBE644116}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F27AD043-427A-4F2A-B3DD-2A4BBE644116}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F27AD043-427A-4F2A-B3DD-2A4BBE644116}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F27AD043-427A-4F2A-B3DD-2A4BBE644116}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

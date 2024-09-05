@@ -80,6 +80,10 @@ namespace academia_api.routes
                     return Results.NotFound("Professor não encontrado.");
                 }
 
+                if(professor.Senha == null){
+                    professor.Senha = existingProfessor.Senha;
+                }
+
                 professor.IdProfessor = id;
                 await professorRepository.UpdateAsync(professor);
                 return Results.Ok(professor);

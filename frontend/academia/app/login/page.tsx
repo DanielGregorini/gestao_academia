@@ -3,7 +3,8 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useRouter } from "next/navigation"; // Importando o useRouter de 'next/router'
 import type { NextPage } from "next"; // Para definir o tipo da página como NextPage
 import LoginData from "@/utils/types/loginData";
-
+import Aluno from "@/utils/classes/aluno";
+import Professor from "@/utils/classes/professor";
 
 const LoginPage: NextPage = () => {
   const [username, setUsername] = useState<string>("");
@@ -43,38 +44,18 @@ const LoginPage: NextPage = () => {
       }
 
       if (response.ok) {
-        const data: LoginData = await response.json(); // Supondo que data inclua `token` e informações do usuário
+        const data: LoginData = await response.json();
+
         const userType = loginUrl.includes("aluno") ? "Aluno" : "Professor";
 
-        // Salva no localStorage informações do token e do usuário
-        console.log(data)
-        if (userType == "Aluno") {
-
-          let aluno = data.aluno;
-
-          localStorage.setItem(
-            "loginToken",
-            JSON.stringify({
-              token: data.token,
-              userType: userType,
-              userDetails: aluno,  
-            })
-          );
-        } else {
-
-          let professor = data.professor;
-
-
-
-          localStorage.setItem(
-            "loginToken",
-            JSON.stringify({
-              token: data.token,
-              userType: userType,
-              userDetails: professor, // Adicionando detalhes do usuário para serem salvos
-            })
-          );
-        }
+        localStorage.setItem(
+          "loginToken",
+          JSON.stringify({
+            token: data.token,
+            userType: userType,
+            userDetails: userType === "Aluno" ? data.aluno : data.professor
+          })
+        );
 
         //Redirecionamento baseado no tipo de usuário
         router.push(userType === "Aluno" ? "/aluno" : "/professor");
