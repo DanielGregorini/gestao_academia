@@ -1,18 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import ProfessorId from "../professor/professorId";
+import Image from "next/image"; // Importando o componente Image
+import ImageLogo from "@/public/imageLogo.png"; // Ajuste o caminho conforme necessário
 
 function NavbarProfessor() {
   return (
     <nav className="flex justify-between items-center p-4 bg-gray-800">
       <div className="text-white text-xl font-bold">
-        <Link href="/">logo</Link>
+        <Link href="/" passHref>
+          <Image src={ImageLogo} alt="Logo" width={50} height={50} />{" "}
+        </Link>
       </div>
 
       <div className="flex justify-around items-center w-1/3">
-        <div className="text-white text-xl font-bold">
-          <Link href="/professor/editartreinos">Editar treinos</Link>
-        </div>
 
         <div className="text-white text-xl font-bold">
           <Link href="/professor/meusalunos">Meus Alunos</Link>
@@ -21,11 +22,10 @@ function NavbarProfessor() {
         <div className="text-white text-xl font-bold">
           <Link href="/professor/novoaluno">Novo Aluno</Link>
         </div>
-        
       </div>
 
       <div className="flex justify-end items-center w-1/3">
-      <div className="text-white text-2xl px-3">
+        <div className="text-white text-2xl px-3">
           <ProfessorId />
         </div>
 
@@ -37,4 +37,4 @@ function NavbarProfessor() {
   );
 }
 
-export default NavbarProfessor; 
+export default NavbarProfessor;

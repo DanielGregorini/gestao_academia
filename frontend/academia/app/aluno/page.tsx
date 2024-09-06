@@ -19,10 +19,10 @@ function AlunoComponent() {
     } else {
       router.push("/login");
     }
-  }, []);
+  }, [router]);
 
   return (
-    <div>
+    <div style={{ minHeight: "50rem" }}>
       <h1>Detalhes do Aluno</h1>
       {aluno ? (
         <>

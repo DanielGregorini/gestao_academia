@@ -17,6 +17,8 @@ function TreinoCard({ treino, onClickPut, onClickDelete }: TreinoCardProps) {
   }
 
   function handleClickDelete() {
+    console.log("handleClickDelete chamada");
+    console.log(treino);
     onClickDelete(treino.idTreino !== undefined ? treino.idTreino : 1);
   }
 
@@ -31,13 +33,13 @@ function TreinoCard({ treino, onClickPut, onClickDelete }: TreinoCardProps) {
         ))}
       </ul>
       <div>
-        <button className="" onClick={handleClick}>
+        <button className="p-2 m-1 bg-slate-200 w-24 text-center rounded-md" onClick={handleClick}>
           Editar
         </button>
       </div>
 
       <div>
-        <button className="" onClick={handleClickDelete}>
+        <button className="p-2 m-1 bg-red-400 w-24 text-center rounded-md" onClick={handleClickDelete}>
           Excluir
         </button>
       </div>

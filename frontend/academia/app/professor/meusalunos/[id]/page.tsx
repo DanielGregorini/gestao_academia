@@ -4,10 +4,21 @@ import { useParams } from "next/navigation";
 import Treino from "@/utils/classes/treino";
 import TreinoCard from "@/components/treino/treinoCard";
 import Input from "@/components/form/Input";
+import AlunoId from '../../../../components/aluno/alunoId';
 
 const MeusAlunosIdPage = () => {
   const params = useParams();
   const { id } = params;
+
+  let alunoId: number;
+
+    if (Array.isArray(id)) {
+        // Se id for array, pegue o primeiro elemento
+        alunoId = parseInt(id[0], 10);
+    } else {
+        // Se id for uma string simples, converta diretamente
+        alunoId = parseInt(id, 10);
+    }
 
   const [treinos, setTreinos] = useState<Treino[]>([]);
   const [isLoading, setLoading] = useState(true);
@@ -78,13 +89,19 @@ const MeusAlunosIdPage = () => {
     const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
     let atualizarUrl = `${backendUrl}/treino/`;
 
+    
+    let treino_ = treino;
+    treino_.idAluno = alunoId;
+
+    console.log(treino_)
+
     try {
       let response = await fetch(atualizarUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(treino),
+        body: JSON.stringify(treino_),
       });
 
       if (response.ok) {
@@ -182,22 +199,11 @@ const MeusAlunosIdPage = () => {
   //-----delete treino ----------------------///////////////////////////
 
   const onClickDelete = async (idTreino: number) => {
+    console.log("onClickDelete chamadaaaaaaaa");
     console.log(idTreino);
 
-    const treinoEncontrado = treinos.find(
-      (treino) => treino.idTreino === idTreino
-    );
-
-    if (treinoEncontrado) {
-      setTreinoSelecionado(treinoEncontrado);
-      console.log(`Treino selecionado: ${treinoEncontrado.idTreino}`);
-    } else {
-      console.log("Nenhum treino encontrado com esse ID");
-      return;
-    }
-
     const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
-    let deleteUrl = `${backendUrl}/treino/${treinoSelecionado?.idTreino}`;
+    let deleteUrl = `${backendUrl}/treino/${idTreino}`;
 
     try {
       let response = await fetch(deleteUrl, {
@@ -208,22 +214,8 @@ const MeusAlunosIdPage = () => {
       });
 
       if (response.ok) {
-        
-        console.log("Treino DELETADO:", idTreino);
-
-        const indice = treinos.findIndex(
-          (treino) => treino.idTreino === idTreino
-        );
-
-        if (indice === -1) {
-          console.log("Treino não encontrado.");
-          return;
-        }
-
-        
-        const novosTreinos = treinos;
-        novosTreinos.splice(indice, 1);
-        setTreinos(novosTreinos);
+  
+        window.location.reload();
 
       } else {
         const error = await response.json();
@@ -252,6 +244,7 @@ const MeusAlunosIdPage = () => {
       <div className="flex flex-wrap justify-center">
         {treinos.map((treino) => (
           <TreinoCard treino={treino} 
+          key={treino.idTreino}
           onClickPut={onClickPut} 
           onClickDelete={onClickDelete}
           />
@@ -358,7 +351,7 @@ const MeusAlunosIdPage = () => {
               <Input
                 type="text"
                 id="letra"
-                value={treinoSelecionado.letra}
+                value={treinoSelecionado?.letra}
                 onChange={handleInputChangePut}
                 required
                 className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -375,7 +368,7 @@ const MeusAlunosIdPage = () => {
               <Input
                 type="text"
                 id="diaSemana"
-                value={treinoSelecionado.diaSemana}
+                value={treinoSelecionado?.diaSemana}
                 onChange={handleInputChangePut}
                 required
                 className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"
@@ -392,7 +385,7 @@ const MeusAlunosIdPage = () => {
               <Input
                 type="text"
                 id="listaExercicios"
-                value={treinoSelecionado.listaExercicios}
+                value={treinoSelecionado?.listaExercicios}
                 onChange={handleInputChangePut}
                 required
                 className="px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200"

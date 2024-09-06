@@ -2,8 +2,8 @@
 function ProfessorPage() {
   
   return (
-    <main className="min-h-96">
-      <div>Professor page</div>
+    <main style={{ minHeight: "50rem" }}>
+      <div className="text-center text-4xl mt-20">Bem-Vindo Professor</div>
     </main>
   );
 }

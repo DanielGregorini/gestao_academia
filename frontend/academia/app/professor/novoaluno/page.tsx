@@ -8,6 +8,7 @@ function NovoAluno() {
   const router = useRouter();
 
   const [novoAluno, setNovoAluno] = useState<Aluno>(new Aluno());
+  const [data, setData] = useState<string>('2003-01-01');
 
   useEffect(() => {
     const storedData = localStorage.getItem("loginToken");
@@ -53,8 +54,14 @@ function NovoAluno() {
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    await event.preventDefault();
+    event.preventDefault();
+
+    let novoAluno_ = novoAluno;
+    const dateObject = new Date(data);
+    novoAluno_.dtNascimento = dateObject;
+
     console.log("Aluno cadastrado:", novoAluno);
+
     const backendUrl =
       (await process.env.BACKEND_URL) || "http://localhost:5298";
 
@@ -148,12 +155,8 @@ function NovoAluno() {
             <input
               type="date"
               id="dateInput"
-              value={
-                novoAluno.dtNascimento
-                  ? new Date(novoAluno.dtNascimento).toISOString().split("T")[0]
-                  : new Date().toISOString().split("T")[0]
-              }
-              onChange={handleChangeDate}
+              value={data}
+              onChange={(e) => {setData(e.target.value)}}
             />
           </div>
 

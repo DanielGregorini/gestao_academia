@@ -4,7 +4,7 @@ import Aluno from "@/utils/classes/aluno";
 import Professor from "@/utils/classes/professor";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import AlunoCard from "@/components/aluno/alunoCard"; // Confirme que o caminho está correto
+import AlunoCard from "@/components/aluno/alunoCard";
 
 function MeusTreinosPage() {
   const router = useRouter();
