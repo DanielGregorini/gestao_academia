@@ -32,6 +32,12 @@ builder.Services.AddCors(options =>
                           .AllowAnyHeader());
 });
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5298); // Ou use options.Listen(IPAddress.Any, 5298);
+});
+
+
 // Adicionar serviços ao contêiner
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -53,6 +59,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddAuthorization();
 
+// Configurar o pipeline de requisição HTTP
 var app = builder.Build();
 
 // Aplicar o middleware de CORS

@@ -14,3 +14,11 @@ dotnet ef database update
 # USUARIO
 
 CREATE USER 'projeto'@'%' IDENTIFIED BY 'Projeto_academia@1';
+
+
+docker run -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Development dotnetapi1 --name dotnetapi1
+
+
+
+
+
