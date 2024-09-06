@@ -61,3 +61,16 @@ Content-Type: application/json
     "DiaSemana": "Terça-feira",
     "ListaExercicios": "Supino; Agachamento; Flexão; muitos exercicios"
 }
+
+###
+
+
+PUT {{host}}/treino/5 HTTP/1.1
+Content-Type: application/json
+
+{
+    "IdAluno": 2,
+    "Letra": "G",
+    "DiaSemana": "Terça-feira",
+    "ListaExercicios": "Supino; Agachamento; Flexdddão; muitos exercicios"
+}

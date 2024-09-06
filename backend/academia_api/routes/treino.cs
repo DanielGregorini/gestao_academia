@@ -46,6 +46,8 @@ namespace academia_api.routes
 
             app.MapPut("/treino/{id:int}", async (int id, HttpRequest request) =>
             {
+                Console.WriteLine("oiiii   ", id);
+                 Console.WriteLine("oiiii   ", id);
                 var treino = await request.ReadFromJsonAsync<Treino>();
 
                 if (treino == null)
@@ -62,6 +64,7 @@ namespace academia_api.routes
                 }
 
                 treino.IdTreino = id;
+            
                 await treinoRepository.UpdateAsync(treino);
                 return Results.Ok(treino);
             });
