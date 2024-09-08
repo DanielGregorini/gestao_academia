@@ -23,20 +23,18 @@ if (string.IsNullOrEmpty(secretKey))
 // Criar a chave de assinatura usando a chave secreta
 var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
+
 // Configurar o CORS para permitir requisições de qualquer origem
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader());
+    options.AddPolicy("PermitirTudo",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
 });
-
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenLocalhost(5298); // Ou use options.Listen(IPAddress.Any, 5298);
-});
-
 
 // Adicionar serviços ao contêiner
 builder.Services.AddEndpointsApiExplorer();
@@ -63,7 +61,7 @@ builder.Services.AddAuthorization();
 var app = builder.Build();
 
 // Aplicar o middleware de CORS
-app.UseCors();
+app.UseCors("PermitirTudo");
 
 app.UseAuthentication();
 app.UseAuthorization();
@@ -79,11 +77,9 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
-
-app.MapGet("/", () => "API na escuta!!!").WithName("/").WithOpenApi();
-
+app.MapGet("/", () => "API está funcionando!");
 // Mapear as rotas
+
 app.MapAlunoRoutes();
 app.MapProfessorRoutes();
 app.MapTreinoRoutes();

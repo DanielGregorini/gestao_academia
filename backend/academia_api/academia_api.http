@@ -1,4 +1,4 @@
-@host = http://localhost:5298
+@host = http://localhost:5000
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InByb2Zlc3NvcjEiLCJyb2xlIjoic2VuaGExIiwiVXNlclR5cGUiOiJwcm9mZXNzb3IiLCJuYmYiOjE3MjUzMTEwNDMsImV4cCI6MTcyNzk3NTA0MywiaWF0IjoxNzI1MzExMDQzfQ.H9kZSbWmYocmkFc-omp2HW51233a5gw3D4td3IH95jM
 
 ###
@@ -52,15 +52,16 @@ Content-Type: application/json
 ###
 
 
-POST {{host}}/treino HTTP/1.1
+GET {{host}}/treino HTTP/1.1
 Content-Type: application/json
 
-{
-    "IdAluno": 2,
-    "Letra": "C",
-    "DiaSemana": "Terça-feira",
-    "ListaExercicios": "Supino; Agachamento; Flexão; muitos exercicios"
-}
+###
+
+###
+
+
+GET {{host}}/ HTTP/1.1
+Content-Type: application/json
 
 ###
 

@@ -49,4 +49,4 @@ USER nextjs
 EXPOSE 3000
 
 # Rodar a aplicação Next.js
-CMD ["node", "server.js"]
+CMD ["npx", "next", "start"]

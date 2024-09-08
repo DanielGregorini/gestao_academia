@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: db_academia
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always  # Aqui está corrigido
+
+  academia_api:
+    build:
+      context: ./backend/academia_api
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=db_academia;User=root;Password=admin;
+    depends_on:
+      - mysql
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/academia_api:/app
+    restart: always  # Aqui também está corrigido
+    
+  academia_frontend:
+    build: ./frontend/academia
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:5000
+    depends_on:
+      - academia_api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend/academia:/app
+
+volumes:
+  mysql-data:

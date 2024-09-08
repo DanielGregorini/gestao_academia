@@ -19,7 +19,9 @@ namespace academia_api.data
                 //ver os log do efcore
                 //optionsBuilder.LogTo(System.Console.WriteLine); ;
 
-                string connectionString = "Server=localhost;Database=db_academia;User=projeto;Password=Projeto_academia@1;";
+                //linux
+                //string connectionString = "Server=localhost;Database=db_academia;User=projeto;Password=Projeto_academia@1;";
+                string connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;";
 
                 optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
