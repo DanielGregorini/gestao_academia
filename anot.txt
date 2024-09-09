@@ -1,12 +1,24 @@
 version: '3.8'
 
 services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: db_academia
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: always
+
   academia_api:
     build:
       context: ./backend/academia_api
     environment:
-      # Conectando ao MySQL do computador host via host.docker.internal
-      - ConnectionStrings__DefaultConnection=Server=host.docker.internal;Database=db_academia;User=root;Password=admin;Port=3306;User=root;Password=admin;
+      - ConnectionStrings__DefaultConnection=Server=mysql;Database=db_academia;User=root;Password=admin;
+    depends_on:
+      - mysql
     ports:
       - "5000:5000"
     volumes:
@@ -28,8 +40,6 @@ services:
       - ./frontend/academia:/app
       - /app/node_modules
     command: yarn dev
-
-# Removido o serviço MySQL do Docker, pois será utilizado o MySQL do host local
 
 volumes:
   mysql-data:

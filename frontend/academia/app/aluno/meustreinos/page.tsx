@@ -40,7 +40,7 @@ function MeusTreinosPage() {
       const initialAluno: Aluno = parsedData.userDetails ? parsedData.userDetails : null;
       setAluno(initialAluno);
 
-      const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+      const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
       let treinoAlunoUrl = `${backendUrl}/treino/aluno/${initialAluno.idAluno}`; // Supondo que a URL é assim
 
       fetchData(treinoAlunoUrl, parsedData.token); // Chama a função com a URL e o token

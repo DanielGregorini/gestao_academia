@@ -63,7 +63,7 @@ function NovoAluno() {
     console.log("Aluno cadastrado:", novoAluno);
 
     const backendUrl =
-      (await process.env.BACKEND_URL) || "http://localhost:5298";
+      (await process.env.BACKEND_URL) || "http://localhost:5000";
 
     let atualizarUrl = `${backendUrl}/aluno/`;
 

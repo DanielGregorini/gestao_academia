@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using academia_api.model; // Certifique-se de que este namespace está correto, onde suas classes de modelos estão definidas
 
 namespace academia_api.data
@@ -21,9 +22,13 @@ namespace academia_api.data
 
                 //linux
                 //string connectionString = "Server=localhost;Database=db_academia;User=projeto;Password=Projeto_academia@1;";
-                string connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;";
+                //string connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;";
 
-                optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
+
+                //var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
+           
+                optionsBuilder.UseInMemoryDatabase("AcademiaDb");
+                //optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
         }
 
@@ -86,8 +91,31 @@ namespace academia_api.data
             modelBuilder.Entity<Treino>()
                 .HasOne(t => t.Aluno)
                 .WithMany(a => a.Treinos)
-                .HasForeignKey(t => t.IdAluno); ;
+                .HasForeignKey(t => t.IdAluno);
             
+
+            modelBuilder.Entity<Academia>().HasData(
+                new Academia
+                {
+                    IdAcademia = 1,
+                    Nome = "Academia Central",
+                    Cnpj = "12.345.678/0001-99",
+                    Endereco = "Rua Principal, 123"
+                }
+            );
+
+            modelBuilder.Entity<Professor>().HasData(
+                new Professor
+                {
+                    IdProfessor = 1,
+                    IdAcademia = 1,
+                    Nome = "Professor João",
+                    Cpf = "123.456.789-00",
+                    DtNascimento = new DateTime(1980, 1, 1),
+                    Login = "professor1",
+                    Senha = "senha1"
+                }
+            );
         }
     }
 }

@@ -43,7 +43,7 @@ function EditarPerfilPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
     let atualizarUrl = `${backendUrl}/aluno/${aluno.idAluno}`;
 
     let aluno_ = aluno; 

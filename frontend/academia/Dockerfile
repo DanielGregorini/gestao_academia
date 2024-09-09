@@ -1,52 +1,35 @@
-# Etapa 1: Dependências
-FROM node:18-alpine AS base
+FROM node:18-alpine as base
+RUN apk add --no-cache g++ make py3-pip libc6-compat
 WORKDIR /app
-
-# Instalar dependências do sistema
-RUN apk add --no-cache libc6-compat
-
-# Copiar arquivos de dependências
-COPY package.json yarn.lock* ./
-
-# Instalar dependências
-RUN yarn install --frozen-lockfile
-
-# Etapa 2: Build
-FROM base AS builder
-WORKDIR /app
-
-# Copiar todo o código fonte
-COPY . .
-
-# Build de produção
-RUN yarn build
-
-# Etapa 3: Imagem final para rodar o Next.js
-FROM node:18-alpine AS runner
-WORKDIR /app
-
-# Definir variáveis de ambiente
-ENV NODE_ENV production
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
-
-# Criar usuário não privilegiado
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
-
-# Copiar os arquivos necessários da build
-COPY --from=builder /app/.next/standalone ./
-COPY --from=builder /app/.next/static ./.next/static
-COPY --from=builder /app/public ./public
-
-# Permissões para o usuário não privilegiado
-RUN chown -R nextjs:nodejs /app
-
-# Usar o usuário não privilegiado
-USER nextjs
-
-# Expor a porta
+COPY package*.json ./
 EXPOSE 3000
 
-# Rodar a aplicação Next.js
-CMD ["npx", "next", "start"]
+FROM base as builder
+WORKDIR /app
+COPY . .
+RUN npm run build
+
+
+FROM base as production
+WORKDIR /app
+
+ENV NODE_ENV=production
+RUN npm ci
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+USER nextjs
+
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/public ./public
+
+CMD npm start
+
+FROM base as dev
+ENV NODE_ENV=development
+RUN npm install 
+COPY . .
+CMD npm run dev

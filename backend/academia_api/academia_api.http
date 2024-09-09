@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {
     "IdAcademia": 1,
-    "Nome": "João da Silva",
+    "Nome": "João da Silva1",
     "Cpf": "987.654.321-00",
     "DtNascimento": "1980-03-15",
     "Login": "professor1",
@@ -23,22 +23,32 @@ Content-Type: application/json
 }
 
 ### aluno
+###
+
+POST {{host}}/aluno/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "Login": "aluno4443",
+    "Senha": "senha4443"
+}
+###
 
 POST {{host}}/aluno HTTP/1.1
 Content-Type: application/json
 
 {
     "idAcademia": 1,
-    "idProfessor": 3,
-    "nome": "aluno 4443",
+    "idProfessor": 1,
+    "nome": "aluno 1",
     "cpf": "987.654.321-00",
     "dtNascimento": "1983-03-15",
-    "login": "aluno4443",
-    "senha": "senha4443"
+    "login": "aluno1",
+    "senha": "senha1"
 }
 ####
 
-GET {{host}}/professor/3 HTTP/1.1
+GET {{host}}/professor/ HTTP/1.1
 
 ###
 

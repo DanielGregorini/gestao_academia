@@ -35,7 +35,7 @@ const MeusAlunosIdPage = () => {
   }, []);
 
   async function fetchTreinos() {
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
     let treinosUrl = `${backendUrl}/treino/aluno/${id}`;
     let token: any;
     const storedData = localStorage.getItem("loginToken");
@@ -86,7 +86,7 @@ const MeusAlunosIdPage = () => {
   const handleSubmitAdd = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
     let atualizarUrl = `${backendUrl}/treino/`;
 
     
@@ -153,7 +153,7 @@ const MeusAlunosIdPage = () => {
   const handleSubmitPut = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
     let atualizarUrl = `${backendUrl}/treino/${treinoSelecionado?.idTreino}`;
 
     try {
@@ -202,7 +202,7 @@ const MeusAlunosIdPage = () => {
     console.log("onClickDelete chamadaaaaaaaa");
     console.log(idTreino);
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5298";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
     let deleteUrl = `${backendUrl}/treino/${idTreino}`;
 
     try {
@@ -397,7 +397,7 @@ const MeusAlunosIdPage = () => {
                 type="submit"
                 className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 "
               >
-                Criar novo Treino
+                Editar Treino
               </button>
             </div>
           </form>
