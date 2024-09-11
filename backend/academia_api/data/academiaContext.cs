@@ -1,13 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using academia_api.model; // Certifique-se de que este namespace está correto, onde suas classes de modelos estão definidas
+using academia_api.model;
 
 namespace academia_api.data
 {
     public class AcademiaContext : DbContext
     {
         public AcademiaContext() {}
-
         public DbSet<Academia> Academias { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
@@ -18,21 +17,19 @@ namespace academia_api.data
             if (!optionsBuilder.IsConfigured)
             {
                 //ver os log do efcore
-                //optionsBuilder.LogTo(System.Console.WriteLine); ;
+                //optionsBuilder.LogTo(System.Console.WriteLine);
 
                 //linux
                 //string connectionString = "Server=localhost;Database=db_academia;User=projeto;Password=Projeto_academia@1;";
                 //string connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;";
 
-
-                //var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
-           
-                optionsBuilder.UseInMemoryDatabase("AcademiaDb");
-                //optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
+                //db falsa
+                //optionsBuilder.UseInMemoryDatabase("AcademiaDb");
+                var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
+                optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
         }
 
-       
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
