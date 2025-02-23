@@ -1,4 +1,4 @@
-@host = http://localhost:5000
+@host = http://localhost:5777
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InByb2Zlc3NvcjEiLCJyb2xlIjoic2VuaGExIiwiVXNlclR5cGUiOiJwcm9mZXNzb3IiLCJuYmYiOjE3MjUzMTEwNDMsImV4cCI6MTcyNzk3NTA0MywiaWF0IjoxNzI1MzExMDQzfQ.H9kZSbWmYocmkFc-omp2HW51233a5gw3D4td3IH95jM
 
 ###

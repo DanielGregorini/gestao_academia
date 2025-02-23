@@ -27,9 +27,9 @@ CREATE USER 'projeto'@'%' IDENTIFIED BY 'Projeto_academia@1';
 
 Para rodar o projeto com Docker, execute o seguinte comando:
 
-docker run -p 8080:5000 -e ASPNETCORE_ENVIRONMENT=Development --name dotnetapi1 dotnetapi1
+docker run -p 8080:5777 -e ASPNETCORE_ENVIRONMENT=Development --name dotnetapi1 dotnetapi1
 
-Após isso, a API estará acessível em http://localhost:5000.
+Após isso, a API estará acessível em http://localhost:5777.
 
 ## Utilizando o Entity Framework Core
 
@@ -60,4 +60,4 @@ Para rodar a aplicação manualmente, sem Docker, execute os seguintes comandos 
 
 dotnet run
 
-Agora, abra http://localhost:5000 no navegador para acessar a aplicação.
+Agora, abra http://localhost:5777 no navegador para acessar a aplicação.

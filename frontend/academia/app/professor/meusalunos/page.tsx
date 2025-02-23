@@ -34,7 +34,7 @@ function MeusTreinosPage() {
   }, []);
 
   async function fetchAlunos(idProfessor: number) {
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let alunoPorProfessorUrl = `${backendUrl}/aluno/professor/${idProfessor}`;
 
     try {

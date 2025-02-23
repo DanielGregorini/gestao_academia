@@ -39,7 +39,7 @@ builder.Services.AddCors(options =>
 // Adicionar serviços ao contêiner
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.WebHost.UseUrls("http://0.0.0.0:5000");
+builder.WebHost.UseUrls("http://0.0.0.0:5777");
 
 // Configuração da autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

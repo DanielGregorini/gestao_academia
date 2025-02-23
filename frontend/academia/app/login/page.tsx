@@ -14,7 +14,7 @@ const LoginPage: NextPage = () => {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let loginUrl = `${backendUrl}/aluno/login`;
 
     try {

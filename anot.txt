@@ -20,7 +20,7 @@ services:
     depends_on:
       - mysql
     ports:
-      - "5000:5000"
+      - "5777:5777"
     volumes:
       - ./backend/academia_api:/app
       - /app/bin # Evita problemas com compilação e binários sobrescritos
@@ -31,7 +31,7 @@ services:
       context: ./frontend/academia
     environment:
       - NODE_ENV=development
-      - NEXT_PUBLIC_API_URL=http://host.docker.internal:5000 # Acessa o backend na máquina host
+      - NEXT_PUBLIC_API_URL=http://host.docker.internal:5777 # Acessa o backend na máquina host
     depends_on:
       - academia_api
     ports:

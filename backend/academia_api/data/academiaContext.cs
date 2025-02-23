@@ -25,7 +25,9 @@ namespace academia_api.data
 
                 //db falsa
                 //optionsBuilder.UseInMemoryDatabase("AcademiaDb");
-                var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
+                //var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
+
+                var connectionString = "Server=localhost;Database=vs;User=daniel;Password=daniel;Port=3306;";
                 optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
         }

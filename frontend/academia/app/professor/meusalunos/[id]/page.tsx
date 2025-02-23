@@ -35,7 +35,7 @@ const MeusAlunosIdPage = () => {
   }, []);
 
   async function fetchTreinos() {
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let treinosUrl = `${backendUrl}/treino/aluno/${id}`;
     let token: any;
     const storedData = localStorage.getItem("loginToken");
@@ -86,7 +86,7 @@ const MeusAlunosIdPage = () => {
   const handleSubmitAdd = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let atualizarUrl = `${backendUrl}/treino/`;
 
     
@@ -153,7 +153,7 @@ const MeusAlunosIdPage = () => {
   const handleSubmitPut = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let atualizarUrl = `${backendUrl}/treino/${treinoSelecionado?.idTreino}`;
 
     try {
@@ -202,7 +202,7 @@ const MeusAlunosIdPage = () => {
     console.log("onClickDelete chamadaaaaaaaa");
     console.log(idTreino);
 
-    const backendUrl = process.env.BACKEND_URL || "http://localhost:5000";
+    const backendUrl = process.env.BACKEND_URL || "http://localhost:5777";
     let deleteUrl = `${backendUrl}/treino/${idTreino}`;
 
     try {

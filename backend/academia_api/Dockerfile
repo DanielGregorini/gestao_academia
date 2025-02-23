@@ -9,8 +9,8 @@ RUN dotnet restore
 # Copiar todo o código fonte
 COPY . ./
 
-# Expor a porta 5000 no container
-EXPOSE 5000
+# Expor a porta 5777 no container
+EXPOSE 5777
 
 # Comando para rodar a aplicação em modo de desenvolvimento
-ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:5000"]
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:5777"]
