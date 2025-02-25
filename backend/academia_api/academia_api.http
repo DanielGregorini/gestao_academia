@@ -34,16 +34,20 @@ Content-Type: application/json
 }
 ###
 
+DELETE  {{host}}/aluno/1 HTTP/1.1
+
+####
+
 POST {{host}}/aluno HTTP/1.1
 Content-Type: application/json
 
 {
     "idAcademia": 1,
-    "idProfessor": 1,
-    "nome": "aluno 1",
+    "idProfessor": 2,
+    "nome": "aluno teste 1",
     "cpf": "987.654.321-00",
     "dtNascimento": "1983-03-15",
-    "login": "aluno1",
+    "login": "aluno_teste1",
     "senha": "senha1"
 }
 ####

@@ -7,6 +7,10 @@ namespace academia_api.data
     public class AcademiaContext : DbContext
     {
         public AcademiaContext() {}
+        public AcademiaContext(DbContextOptions<AcademiaContext> options)
+            : base(options)
+        {
+        }
         public DbSet<Academia> Academias { get; set; }
         public DbSet<Professor> Professores { get; set; }
         public DbSet<Aluno> Alunos { get; set; }
@@ -27,7 +31,7 @@ namespace academia_api.data
                 //optionsBuilder.UseInMemoryDatabase("AcademiaDb");
                 //var connectionString = "Server=localhost;Database=db_academia;User=root;Password=admin;Port=3306;";
 
-                var connectionString = "Server=localhost;Database=vs;User=daniel;Password=daniel;Port=3306;";
+                var connectionString = "Server=localhost;Database=academia;User=daniel;Password=daniel;Port=3306;";
                 optionsBuilder.UseMySql(connectionString, new MySqlServerVersion(new Version(8, 0, 25)));
             }
         }
@@ -112,6 +116,19 @@ namespace academia_api.data
                     Cpf = "123.456.789-00",
                     DtNascimento = new DateTime(1980, 1, 1),
                     Login = "professor1",
+                    Senha = "senha1"
+                }
+            );
+
+            modelBuilder.Entity<Professor>().HasData(
+                new Professor
+                {
+                    IdProfessor = 2,
+                    IdAcademia = 1,
+                    Nome = "Professor TESTE",
+                    Cpf = "123.456.789-00",
+                    DtNascimento = new DateTime(1980, 1, 1),
+                    Login = "professor_teste1",
                     Senha = "senha1"
                 }
             );

@@ -8,7 +8,6 @@ namespace academia_api.routes
     {
         public static void MapProfessorRoutes(this IEndpointRouteBuilder app)
         {
-
             app.MapPost("/professor/login", async (LoginRequest request) =>
             {
                 if (request == null || string.IsNullOrWhiteSpace(request.Login) || string.IsNullOrWhiteSpace(request.Senha))

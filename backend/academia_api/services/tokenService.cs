@@ -18,8 +18,7 @@ namespace academia_api.services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, aluno.Login.ToString()),
-                    new Claim(ClaimTypes.Role, aluno.Senha.ToString()),
-                    new Claim("UserType", "aluno") 
+                    new Claim(ClaimTypes.Role, "aluno"),
                 }),
                 Expires = DateTime.UtcNow.AddHours(740),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -37,8 +36,7 @@ namespace academia_api.services
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, professor.Login.ToString()),
-                    new Claim(ClaimTypes.Role, professor.Senha.ToString()),
-                    new Claim("UserType", "professor") 
+                    new Claim(ClaimTypes.Role, "professor")
                 }),
                 Expires = DateTime.UtcNow.AddHours(740),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

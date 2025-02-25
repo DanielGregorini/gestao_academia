@@ -10,6 +10,14 @@ Este projeto é uma API desenvolvida com **.NET Core** e **Entity Framework Core
 
 ## Configuração do Banco de Dados
 
+### Criando banco de dados
+
+dotnet tool install --global dotnet-ef
+
+dotnet ef migrations add inicial
+
+dotnet ef database update
+
 ### Inserindo Dados na Tabela `tb_academia` (MySQL)
 
 Caso você opte por utilizar o MySQL como banco de dados, após conectar ao MySQL com o usuário root, use o seguinte comando SQL para inserir um registro de exemplo:

@@ -16,11 +16,11 @@ function NavbarProfessor() {
       <div className="flex justify-around items-center w-1/3">
 
         <div className="text-white text-xl font-bold">
-          <Link href="/professor/meusalunos">Meus Alunos</Link>
+          <Link id="meus_alunos" href="/professor/meusalunos">Meus Alunos</Link>
         </div>
 
         <div className="text-white text-xl font-bold">
-          <Link href="/professor/novoaluno">Novo Aluno</Link>
+          <Link id="novo_aluno" href="/professor/novoaluno">Novo Aluno</Link>
         </div>
       </div>
 
